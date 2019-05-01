@@ -33,8 +33,15 @@
                 3. Search for a player using the search bar at the top and select the player you'd like from the options provided. <br>
                 4. You can refine the search by selecting whether the player is active or not with the radio buttons. <br>
                 5. Search using last name only, this will provide a more thorough search of the player database. <br>
-                6. All stats data will be for the current regular season.<br>
+                6. All stats data will be for the current regular season. <br>
+                7. To switch between your different teams, select which team you'd like to view from the drop-down menu at the top of the screen. <br>
             </p>
+        </div>
+        
+        <div id="teamnav">
+            <select id="teamList">
+                
+            </select>
         </div>
         
         <div id="search">
@@ -53,11 +60,12 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Team</th>
-                    <th id="pid">Player ID</th>
+                    <th>Player ID</th>
+                    <th>Player Position</th>
                 </tr>
             </table>
             
-            <input type="button" id="addResult" value="Add Player"/>
+            <input type="button" id="addResult" value="Add Player(s)"/>
         </div>
         
         <br><br><br>
@@ -188,21 +196,22 @@
                         dataType: "json",
                         data: {
                             'playerName' : 'baez',
+                            'playerId' : "",
                             // 'playerName' : $("[name=lastNameSearch]").val(),
                             'op' : '1'
                         },
                         success: function(data, status) {
                             console.log(data);
                             
-                            data.search_player_all.queryResults.row.forEach(function(element) {
-                                $("#resultsList").append("<tr>" +
-                                                         "<td><input type='checkbox' name='optionList' class='player_choice' />&nbsp;</td>" + 
-                                                         "<td>" + element['name_first'] + "</td>" +
-                                                         "<td>" + element['name_last'] + "</td>" +
-                                                         "<td>" + element['team_full'] + "</td>" +
-                                                         "<td>" + element['player_id'] + "</td>" +
-                                                         "</tr>");
-                            });
+                            // data.search_player_all.queryResults.row.forEach(function(element) {
+                            //     $("#resultsList").append("<tr>" +
+                            //                              "<td><input type='checkbox' name='optionList' class='player_choice' id='" + element['player_id'] +"'/>&nbsp;</td>" + 
+                            //                              "<td>" + element['name_first'] + "</td>" +
+                            //                              "<td>" + element['name_last'] + "</td>" +
+                            //                              "<td>" + element['team_full'] + "</td>" +
+                            //                              "<td>" + element['player_id'] + "</td>" +
+                            //                              "</tr>");
+                            // });
                              
                              
                         },
@@ -212,7 +221,42 @@
                     });
                 });
                 
-                $("#addResult").on("click", function() {});
+                $("#addResult").on("click", function() {
+                    $("[name=optionList]").each(function() {
+                        if ($(this).is(":checked")) {
+                            alert($(this).attr("id"));
+                        }
+                    });
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: "api.php",
+                        dataType: "json",
+                        data: {
+                            'playerId' : '595879',
+                            // 'playerName' : $("[name=lastNameSearch]").val(),
+                            'op' : '2'
+                        },
+                        success: function(data, status) {
+                            console.log(data);
+                            
+                            // data.search_player_all.queryResults.row.forEach(function(element) {
+                            //     $("#resultsList").append("<tr>" +
+                            //                              "<td><input type='checkbox' name='optionList' class='player_choice' id='" + element['player_id'] +"'/>&nbsp;</td>" + 
+                            //                              "<td>" + element['name_first'] + "</td>" +
+                            //                              "<td>" + element['name_last'] + "</td>" +
+                            //                              "<td>" + element['team_full'] + "</td>" +
+                            //                              "<td>" + element['player_id'] + "</td>" +
+                            //                              "</tr>");
+                            // });
+                             
+                             
+                        },
+                        complete: function(data, status) {
+                            console.log(status);
+                        }
+                    });
+                });
             });
                 
             
