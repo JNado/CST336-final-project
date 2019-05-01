@@ -4,6 +4,7 @@
 
 body{
     background-image: url("img/wall.jpg");   
+    color: white;
 }
 
 #signin{
