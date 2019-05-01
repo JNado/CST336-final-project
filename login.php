@@ -27,7 +27,7 @@
       // TODO: do stuff to get the $results which is an associative array
       $host = "127.0.0.1";
       $dbname = "final_project";
-      $username = "jnado";
+      $username = "root";
       $password = "";
     
       if  (strpos($_SERVER['HTTP_HOST'], 'herokuapp') !== false) {

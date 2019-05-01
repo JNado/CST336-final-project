@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="img/favicon.png">
     <link href="./style.css" rel="stylesheet" type="text/css">
-    <title>Baseball Dream Team: Login</title>
+    <title>CSUMB Dashboard Demo Registration</title>
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -34,38 +34,42 @@
 </head>
 
 <body>
-    <signup id ="signin"><a href="signup.html">Create a new account</a></signup>
+    <signup id ="signin"><a href="login.html">Already have an account? Press here to return to login page</a></signup>
     <main class="d-flex align-items-center justify-content-center">
         <div class="card">
             <div class="card-body p-4">
-                <h1>Account Login</h1>
-                <p class="text-muted">Sign in to your account</p>
+                <h1>Registration</h1>
+                <p class="text-muted">Sign up for a new account</p>
                 <form>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">@</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Email" name="email">
+                        <input type="text" class="form-control" placeholder="Email" name="signupEmail">
                     </div>
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="icon-lock"></i></span>
                         </div>
-                        <input type="password" class="form-control" placeholder="Password" name="password">
+                        <input type="password" class="form-control" placeholder="Password" name="signupPassword">
                     </div>
 
-                    <button id="loginButton" type="button" class="btn btn-block btn-success">Login</button>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="icon-lock"></i></span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="Confirm Password" name="signupPasswordConfirmation">
+                    </div>
+
+                    <button id="signupButton" type="button" class="btn btn-block btn-success">Signup</button>
                 </form>
             </div>
             <div class="card-footer p-4">
                 <div id="message" class="alert alert-danger open-hidden" role="alert">
                 </div>
-                
             </div>
-            
         </div>
-
     </main>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -73,22 +77,25 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <script>
-        $("#loginButton").on('click', function(e) {
+        $("#signupButton").on('click', function(e) {
+
             $.ajax({
                 type: "post",
-                url: "login.php",
+                url: "signup.php",
                 dataType: "json",
                 data: {
-                    "email": $("input[name='email']").val(),
-                    "password": $("input[name='password']").val(),
+                    "email": $("input[name='signupEmail']").val(),
+                    "password": [
+                        $("input[name='signupPassword']").val(),
+                        $("input[name='signupPasswordConfirmation']").val()
+                        ],
                 },
                 success: function(data, status) {
-                    // console.log(data);
-                    
-                    if (data.isAuthenticated) {
-                        window.location = "index.php"
+                    console.log(data);
+                    if (data.success) {
+                        window.location = "login.html"
                     } else {
-                        $("#message").html("Bad email or password");
+                        $("#message").html("Bad email or password:" + data.message);
                         $("#message").removeClass("open-hidden");
                     }
                 },

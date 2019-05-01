@@ -1,0 +1,15 @@
+#logout{
+    background-color:lightgreen;
+}
+
+body{
+    background-image: url("img/wall.jpg");   
+}
+
+#signin{
+    display:inline;
+    background-color:lightgreen;
+    margin:10px;
+    padding:1em;
+    border:solid purple 1px;
+}

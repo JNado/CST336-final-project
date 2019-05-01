@@ -1,10 +1,10 @@
-// <?php
-//     session_start();
+<?php
+    session_start();
 
-//     if (!isset($_SESSION['email'])){
-//       header("Location: index.html");
-//     }
-// ?>
+    if (!isset($_SESSION['email'])){
+      header("Location: index.html");
+    }
+?>
 
 
 <!DOCTYPE html>
@@ -15,9 +15,10 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/simple-line-icons.css" rel="stylesheet">
+        <link href="./style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        
+<button id ="logout">Logout <img src="img/lo.png" height=20px></button>
 
             
             
@@ -27,7 +28,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
         <script>
-            $("button").on("click", function() {
+            $("#logout").on("click", function() {
                 window.location = "logout.php";
             })
             
