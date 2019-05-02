@@ -16,17 +16,21 @@
         $pSearch = curl_exec($cSession);
         $err = curl_error($cSession);
         
-        curl_setopt($cSession,CURLOPT_URL,"http://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id='493316'");
+        // echo ($pSearch);
+        //SCHWARTTZCHHHHH
         
-        $pInfo = curl_exec($cSession);
+        // curl_setopt($cSession,CURLOPT_URL,"http://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id='493316'");
+        
+        // $pInfo = curl_exec($cSession);
         
         curl_close($cSession);
         
         // $hold = json_decode($pSearch);
-        array_push($hold, array('player_position' => $pInfo.player_info.queryResults.row.primary_position));
+        
+        // array_push($hold, array('player_position' => $pInfo.player_info.queryResults.row.primary_position));
         
         // $pSearch = json_encode($hold);
-        
+    
         echo ($pSearch);
     } else if ($_POST['op'] == 2) {
         $pId = $_POST['playerId'];

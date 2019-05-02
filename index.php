@@ -27,6 +27,7 @@
 <button id ="logout">Logout <img src="img/lo.png" height=20px></button>
 
 
+
         <style type="text/css">
             th, td {
                 padding: 15px;
@@ -214,23 +215,32 @@
                         url: "api.php",
                         dataType: "json",
                         data: {
-                            'playerName' : 'baez',
+                            
                             'playerId' : "",
+                            'playerName' : 'baez',
                             // 'playerName' : $("[name=lastNameSearch]").val(),
                             'op' : '1'
                         },
                         success: function(data, status) {
                             console.log(data);
+                
                             
-                            // data.search_player_all.queryResults.row.forEach(function(element) {
-                            //     $("#resultsList").append("<tr>" +
-                            //                              "<td><input type='checkbox' name='optionList' class='player_choice' id='" + element['player_id'] +"'/>&nbsp;</td>" + 
-                            //                              "<td>" + element['name_first'] + "</td>" +
-                            //                              "<td>" + element['name_last'] + "</td>" +
-                            //                              "<td>" + element['team_full'] + "</td>" +
-                            //                              "<td>" + element['player_id'] + "</td>" +
-                            //                              "</tr>");
-                            // });
+                            data.search_player_all.queryResults.row.forEach(function(element) {
+                                $("#resultsList").append("<tr>" +
+                                                         "<td><input type='checkbox' name='optionList' class='player_choice' id='" + element['player_id'] +"'/>&nbsp;</td>" + 
+                                                         "<td>" + element['name_first'] + "</td>" +
+                                                         "<td>" + element['name_last'] + "</td>" +
+                                                         "<td>" + element['team_full'] + "</td>" +
+                                                         "<td>" + element['player_id'] + "</td>" +
+                                                         "<td>" + element['position'] + "</td>" +
+                                                         "</tr>");
+                                                         
+                                
+                                // if(element['position'] == "P"){
+                                //     $("#pitcherList").append("<tr><th>"+ element["name_first"] +"</th><th>"+ element["name_last] +"</th><th>"+ "@ERA@" +"</th><th>Win/Loss</th></tr>");
+                                // }
+                                
+                            });
                              
                              
                         },
@@ -243,41 +253,44 @@
                 $("#addResult").on("click", function() {
                     $("[name=optionList]").each(function() {
                         if ($(this).is(":checked")) {
-                            alert($(this).attr("id"));
+                            //alert($(this).attr("id"));
+
+                            idFunction($(this).attr("id"));
                         }
                     });
-                    
-                    $.ajax({
-                        type: "POST",
-                        url: "api.php",
-                        dataType: "json",
-                        data: {
-                            'playerId' : '595879',
-                            // 'playerName' : $("[name=lastNameSearch]").val(),
-                            'op' : '2'
-                        },
-                        success: function(data, status) {
-                            console.log(data);
-                            
-                            // data.search_player_all.queryResults.row.forEach(function(element) {
-                            //     $("#resultsList").append("<tr>" +
-                            //                              "<td><input type='checkbox' name='optionList' class='player_choice' id='" + element['player_id'] +"'/>&nbsp;</td>" + 
-                            //                              "<td>" + element['name_first'] + "</td>" +
-                            //                              "<td>" + element['name_last'] + "</td>" +
-                            //                              "<td>" + element['team_full'] + "</td>" +
-                            //                              "<td>" + element['player_id'] + "</td>" +
-                            //                              "</tr>");
-                            // });
-                             
-                             
-                        },
-                        complete: function(data, status) {
-                            console.log(status);
-                        }
-                    });
+                
                 });
             });
-                
+            function idFunction(id){
+                $.ajax({
+                    type: "POST",
+                    url: "api.php",
+                    dataType: "json",
+                    data: {
+                        'playerId' : id,
+                        // 'playerName' : $("[name=lastNameSearch]").val(),
+                        'op' : '2'
+                    },
+                    success: function(data, status) {
+                        console.log(data);
+                        
+                        // data.search_player_all.queryResults.row.forEach(function(element) {
+                        //     $("#resultsList").append("<tr>" +
+                        //                              "<td><input type='checkbox' name='optionList' class='player_choice' id='" + element['player_id'] +"'/>&nbsp;</td>" + 
+                        //                              "<td>" + element['name_first'] + "</td>" +
+                        //                              "<td>" + element['name_last'] + "</td>" +
+                        //                              "<td>" + element['team_full'] + "</td>" +
+                        //                              "<td>" + element['player_id'] + "</td>" +
+                        //                              "</tr>");
+                        // });
+                         
+                         
+                    },
+                    complete: function(data, status) {
+                        console.log(status);
+                    }
+                });
+            }
             
         </script>
     </body>
