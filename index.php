@@ -248,7 +248,7 @@
                             
                             data.search_player_all.queryResults.row.forEach(function(element) {
                                 $("#resultsList").append("<tr>" +
-                                                         "<td><input type='checkbox' name='optionList' class='player_choice' id='" + element['player_id'] +"'/>&nbsp;</td>" + 
+                                                         "<td><input type='checkbox' name='optionList' class='player_choice' id='" + element['player_id'] +"' pos='"+ element['position'] +"' />&nbsp;</td>" + 
                                                          "<td>" + element['name_first'] + "</td>" +
                                                          "<td>" + element['name_last'] + "</td>" +
                                                          "<td>" + element['team_full'] + "</td>" +
@@ -274,15 +274,22 @@
                 $("#addResult").on("click", function() {
                     $("[name=optionList]").each(function() {
                         if ($(this).is(":checked")) {
-                            //alert($(this).attr("id"));
-
-                            idFunction($(this).attr("id"));
+                            //alert($(this).attr("pos"));
+                            
+                            if($(this).attr("pos") == "P"){
+                                idFunctionPitch($(this).attr("id"));
+                            }
+                            else{
+                                idFunctionBat($(this).attr("id"));
+                            }
+                            
+                           
                         }
                     });
                 
                 });
             });
-            function idFunction(id){
+            function idFunctionBat(id){
                 $.ajax({
                     type: "POST",
                     url: "api.php",
@@ -313,11 +320,45 @@
                 });
             }
             
+            
+            function idFunctionPitch(id){
+                $.ajax({
+                    type: "POST",
+                    url: "api.php",
+                    dataType: "json",
+                    data: {
+                        'playerId' : id,
+                        // 'playerName' : $("[name=lastNameSearch]").val(),
+                        'op' : '3'
+                    },
+                    success: function(data, status) {
+                        console.log(data);
+                        
+                        // data.search_player_all.queryResults.row.forEach(function(element) {
+                        //     $("#resultsList").append("<tr>" +
+                        //                              "<td><input type='checkbox' name='optionList' class='player_choice' id='" + element['player_id'] +"'/>&nbsp;</td>" + 
+                        //                              "<td>" + element['name_first'] + "</td>" +
+                        //                              "<td>" + element['name_last'] + "</td>" +
+                        //                              "<td>" + element['team_full'] + "</td>" +
+                        //                              "<td>" + element['player_id'] + "</td>" +
+                        //                              "</tr>");
+                        // });
+                        
+                        //WHEN I TRY TO ADD BAEZ, I GET AN ERROR? HE'S A PTCHER RIGHT? HE DOESNT HAVE PITCHING STATS?
+                         $("#pitcherList").append("<tr><th>"+ 'element["name_first"]' +"</th><th>"+ 'element["name_last]' +"</th><th>"+ data.sport_pitching_tm.queryResults.row['era'] +"</th><th>"+ data.sport_pitching_tm.queryResults.row['w'] + " / " + data.sport_pitching_tm.queryResults.row['l'] + "</th></tr>");
+                         
+                         
+                    },
+                    complete: function(data, status) {
+                        console.log(status);
+                    }
+                });
+            }
+            
+            
+            //shows a guide (for dumbasses like me) to see what the positions actually mean
             function modal(i){
-            
                  $("#omD").html("<img src='img/guide.png' height=400em>");
-                
-            
             }
             
         </script>

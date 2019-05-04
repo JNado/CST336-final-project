@@ -32,12 +32,37 @@
         // $pSearch = json_encode($hold);
     
         echo ($pSearch);
-    } else if ($_POST['op'] == 2) {
+    } 
+    //batting
+    else if ($_POST['op'] == 2) {
         $pId = $_POST['playerId'];
     
         $cSession = curl_init();
         
         curl_setopt($cSession,CURLOPT_URL,"http://lookup-service-prod.mlb.com/json/named.sport_hitting_tm.bam?league_list_id='mlb'&game_type='R'&season='2019'&player_id='$pId'");
+        curl_setopt($cSession,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($cSession,CURLOPT_HEADER, false);
+        
+        curl_setopt($cSession,CURLOPT_HTTPHEADER, array(
+            "Accept: application/json",
+            "Content-Type: application/json",
+        ));
+        
+        $results = curl_exec($cSession);
+        
+        $err = curl_error($cSession);
+        
+        curl_close($cSession);
+        
+        echo ($results);
+    }
+    //pitching
+    else if ($_POST['op'] == 3) {
+        $pId = $_POST['playerId'];
+    
+        $cSession = curl_init();
+        
+        curl_setopt($cSession,CURLOPT_URL,"http://lookup-service-prod.mlb.com/json/named.sport_pitching_tm.bam?league_list_id='mlb'&game_type='R'&season='2019'&player_id='$pId'");
         curl_setopt($cSession,CURLOPT_RETURNTRANSFER,true);
         curl_setopt($cSession,CURLOPT_HEADER, false);
         
