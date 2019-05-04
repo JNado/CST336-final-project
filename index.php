@@ -73,6 +73,7 @@
                     <th>Team</th>
                     <th>Player ID</th>
                     <th>Player Position</th>
+                    <th><a href="#myModal" data-toggle='modal' onclick='modal()'> (Player Position Guide)</a></th><!--<img src="img/guide.png">-->
                 </tr>
             </table>
             
@@ -189,7 +190,27 @@
             </table>
         </div>
 
-            
+                            <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Player Position Guide</h4>
+            </div>
+            <div class="modal-body">
+              <p id="omD"></p>
+            </div>
+            <div class="modal-footer">
+              <!--<button type=button class="btn btn-default" data-dismiss="modal">Close</button>-->
+            </div>
+          </div>
+          
+        </div>
+      </div>
+          
             
 
         <script src="./JQuery.js"></script>
@@ -290,6 +311,13 @@
                         console.log(status);
                     }
                 });
+            }
+            
+            function modal(i){
+            
+                 $("#omD").html("<img src='img/guide.png' height=400em>");
+                
+            
             }
             
         </script>
