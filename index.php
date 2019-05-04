@@ -248,7 +248,7 @@
                             
                             data.search_player_all.queryResults.row.forEach(function(element) {
                                 $("#resultsList").append("<tr>" +
-                                                         "<td><input type='checkbox' name='optionList' class='player_choice' id='" + element['player_id'] +"' pos='"+ element['position'] +"' />&nbsp;</td>" + 
+                                                         "<td><input type='checkbox' name='optionList' class='player_choice' id='" + element['player_id'] +"' pos='"+ element['position'] +"' firstN = '"+ element['name_first']+"' lastN = '" + element['name_last']+"' />&nbsp;</td>" + 
                                                          "<td>" + element['name_first'] + "</td>" +
                                                          "<td>" + element['name_last'] + "</td>" +
                                                          "<td>" + element['team_full'] + "</td>" +
@@ -277,7 +277,7 @@
                             //alert($(this).attr("pos"));
                             
                             if($(this).attr("pos") == "P"){
-                                idFunctionPitch($(this).attr("id"));
+                                idFunctionPitch($(this).attr("id"), $(this).attr("firstN"), $(this).attr("lastN"));
                             }
                             else{
                                 idFunctionBat($(this).attr("id"));
@@ -321,7 +321,7 @@
             }
             
             
-            function idFunctionPitch(id){
+            function idFunctionPitch(id, f, l){
                 $.ajax({
                     type: "POST",
                     url: "api.php",
@@ -345,7 +345,7 @@
                         // });
                         
                         //WHEN I TRY TO ADD BAEZ, I GET AN ERROR? HE'S A PTCHER RIGHT? HE DOESNT HAVE PITCHING STATS?
-                         $("#pitcherList").append("<tr><th>"+ 'element["name_first"]' +"</th><th>"+ 'element["name_last]' +"</th><th>"+ data.sport_pitching_tm.queryResults.row['era'] +"</th><th>"+ data.sport_pitching_tm.queryResults.row['w'] + " / " + data.sport_pitching_tm.queryResults.row['l'] + "</th></tr>");
+                         $("#pitcherList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_pitching_tm.queryResults.row['era'] +"</th><th>"+ data.sport_pitching_tm.queryResults.row['w'] + " / " + data.sport_pitching_tm.queryResults.row['l'] + "</th></tr>");
                          
                          
                     },
