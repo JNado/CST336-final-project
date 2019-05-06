@@ -16,21 +16,8 @@
         $pSearch = curl_exec($cSession);
         $err = curl_error($cSession);
         
-        // echo ($pSearch);
-        //SCHWARTTZCHHHHH
-        
-        // curl_setopt($cSession,CURLOPT_URL,"http://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id='493316'");
-        
-        // $pInfo = curl_exec($cSession);
-        
         curl_close($cSession);
         
-        // $hold = json_decode($pSearch);
-        
-        // array_push($hold, array('player_position' => $pInfo.player_info.queryResults.row.primary_position));
-        
-        // $pSearch = json_encode($hold);
-    
         echo ($pSearch);
     } 
     //batting
@@ -78,5 +65,31 @@
         curl_close($cSession);
         
         echo ($results);
+    } else if ($_POST['op'] == 4) {
+        session_start();
+        $host = "127.0.0.1";
+        $dbname = "final_project";
+        $username = "jnado";
+        $password = "";
+        
+        if  (strpos($_SERVER['HTTP_HOST'], 'herokuapp') !== false) {
+            $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+            $host = $url["host"];
+            $dbname = substr($url["path"], 1);
+            $username = $url["user"];
+            $password = $url["pass"];
+        } 
+        
+        $dbConn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+    
+        $sql = "INSERT INTO teams (user_id, team_name) VALUES " .
+                "(:id, :name)";
+        $stmt = $dbConn->prepare($sql);
+    
+        $stmt->execute(array(":id" => $_SESSION['id'],
+                            ":name" => $_POST['teamName']));
+        
+        // echo json_encode(array("true", "true"));
     }
 ?>

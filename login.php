@@ -54,6 +54,7 @@
         
       if ($isAuthenticated) {
         $_SESSION["email"] = $record["email"];
+        $_SESSION["id"] = $record["id"];
       }
       
       // Allow any client to access

@@ -14,7 +14,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Baseball Dream Team: Team Creation</title>
+        <title>Baseball Dream Team: Team Maker</title>
 
         <meta charset="utf-8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -239,7 +239,6 @@
                             
                             'playerId' : "",
                             'playerName' : $("#lookUp").val(),
-                            // 'playerName' : $("[name=lastNameSearch]").val(),
                             'op' : '1'
                         },
                         success: function(data, status) {
