@@ -57,7 +57,7 @@
         
         <div id="search">
             <h3>Last Name Search: </h3><br>
-            <input type="text" name="lastNameSearch" size="30"/>
+            <input type="text" id="lookUp" name="lastNameSearch" size="30"/>
             <input type="button" id="searchButton" value="Search"/>
         </div>
         
@@ -238,14 +238,14 @@
                         data: {
                             
                             'playerId' : "",
-                            'playerName' : 'baez',
+                            'playerName' : $("#lookUp").val(),
                             // 'playerName' : $("[name=lastNameSearch]").val(),
                             'op' : '1'
                         },
                         success: function(data, status) {
                             console.log(data);
                 
-                            
+                             $("#resultsList").empty();
                             data.search_player_all.queryResults.row.forEach(function(element) {
                                 $("#resultsList").append("<tr>" +
                                                          "<td><input type='checkbox' name='optionList' class='player_choice' id='" + element['player_id'] +"' pos='"+ element['position'] +"' firstN = '"+ element['name_first']+"' lastN = '" + element['name_last']+"' />&nbsp;</td>" + 
@@ -280,7 +280,7 @@
                                 idFunctionPitch($(this).attr("id"), $(this).attr("firstN"), $(this).attr("lastN"));
                             }
                             else{
-                                idFunctionBat($(this).attr("id"));
+                                idFunctionBat($(this).attr("id"),$(this).attr("firstN"), $(this).attr("lastN"), $(this).attr("pos"));
                             }
                             
                            
@@ -289,7 +289,7 @@
                 
                 });
             });
-            function idFunctionBat(id){
+            function idFunctionBat(id, f, l, p){
                 $.ajax({
                     type: "POST",
                     url: "api.php",
@@ -301,6 +301,58 @@
                     },
                     success: function(data, status) {
                         console.log(data);
+                        
+                        //Depending on players position, put players in list
+                        if(p == "1B"){
+                            if($('#first_base').text().indexOf(f) < 1 & $('#first_base').text().indexOf(l) < 1){
+                                $("#firstList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                            }
+                        }
+                        
+                        if(p == "2B"){
+                            if($('#second_base').text().indexOf(f) < 1 & $('#second_base').text().indexOf(l) < 1){
+                                $("#second_base").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                            }
+                        }
+                        
+                        if(p == "3B"){
+                            alert();
+                            if($('#third_base').text().indexOf(f) < 1 & $('#third_base').text().indexOf(l) < 1){
+                                $("#thirdList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                            }
+                        }
+                        
+                        if(p == "C"){
+                            if($('#catcher').text().indexOf(f) < 1 & $('#catcher').text().indexOf(l) < 1){
+                                $("#catcherList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                            }
+                        }
+                        
+                        if(p == "SS"){
+                            if($('#short_stop').text().indexOf(f) < 1 & $('#short_stop').text().indexOf(l) < 1){
+                                $("#shortList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                            }    
+                        }
+                        
+                        if(p == "LF"){
+                            if($('#left_field').text().indexOf(f) < 1 & $('#left_field').text().indexOf(l) < 1){
+                                $("#leftList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                            }            
+                        }
+                        
+                        if(p == "RF"){
+                            if($('#right_field').text().indexOf(f) < 1 & $('#right_field').text().indexOf(l) < 1){
+                                $("#rightList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                            }
+                        }
+                        
+                        if(p == "CF"){
+                            if($('#center_field').text().indexOf(f) < 1 & $('#center_field').text().indexOf(l) < 1){
+                                $("#centerList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                            }                 
+                        }
+                        
+                        
                         
                         // data.search_player_all.queryResults.row.forEach(function(element) {
                         //     $("#resultsList").append("<tr>" +
@@ -333,26 +385,15 @@
                     },
                     success: function(data, status) {
                         console.log(data);
-                        
-                        // data.search_player_all.queryResults.row.forEach(function(element) {
-                        //     $("#resultsList").append("<tr>" +
-                        //                              "<td><input type='checkbox' name='optionList' class='player_choice' id='" + element['player_id'] +"'/>&nbsp;</td>" + 
-                        //                              "<td>" + element['name_first'] + "</td>" +
-                        //                              "<td>" + element['name_last'] + "</td>" +
-                        //                              "<td>" + element['team_full'] + "</td>" +
-                        //                              "<td>" + element['player_id'] + "</td>" +
-                        //                              "</tr>");
-                        // });
-                        
-                        //WHEN I TRY TO ADD SANDY BAEZ, I GET AN ERROR? HE'S A PTCHER RIGHT? HE DOESNT HAVE PITCHING STATS?
+    
+                        //WHEN I TRY TO ADD SANDY BAEZ, I GET AN ERROR? HE'S A PTCHER RIGHT? HE DOESNT HAVE PITCHING STATS? happens with a lot of pitchers?
                         
                         //This checks to see if a player was already added. if player is already in list, dont add again.
-                        if($('#pitcherList').text().indexOf(f) < 1 & $('#pitcherList').text().indexOf(l) < 1){
+                        if($('#pitcher').text().indexOf(f) < 1 & $('#pitcher').text().indexOf(l) < 1){
                             $("#pitcherList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_pitching_tm.queryResults.row['era'] +"</th><th>"+ data.sport_pitching_tm.queryResults.row['w'] + " / " + data.sport_pitching_tm.queryResults.row['l'] + "</th></tr>");
                         }
                         
-                         
-                         
+                    
                     },
                     complete: function(data, status) {
                         console.log(status);
