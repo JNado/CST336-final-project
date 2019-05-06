@@ -344,8 +344,13 @@
                         //                              "</tr>");
                         // });
                         
-                        //WHEN I TRY TO ADD BAEZ, I GET AN ERROR? HE'S A PTCHER RIGHT? HE DOESNT HAVE PITCHING STATS?
-                         $("#pitcherList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_pitching_tm.queryResults.row['era'] +"</th><th>"+ data.sport_pitching_tm.queryResults.row['w'] + " / " + data.sport_pitching_tm.queryResults.row['l'] + "</th></tr>");
+                        //WHEN I TRY TO ADD SANDY BAEZ, I GET AN ERROR? HE'S A PTCHER RIGHT? HE DOESNT HAVE PITCHING STATS?
+                        
+                        //This checks to see if a player was already added. if player is already in list, dont add again.
+                        if($('#pitcherList').text().indexOf(f) < 1 & $('#pitcherList').text().indexOf(l) < 1){
+                            $("#pitcherList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_pitching_tm.queryResults.row['era'] +"</th><th>"+ data.sport_pitching_tm.queryResults.row['w'] + " / " + data.sport_pitching_tm.queryResults.row['l'] + "</th></tr>");
+                        }
+                        
                          
                          
                     },
