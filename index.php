@@ -18,12 +18,12 @@
 
         <meta charset="utf-8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/simple-line-icons.css" rel="stylesheet">
+        <!--<link href="css/font-awesome.min.css" rel="stylesheet">-->
+        <!--<link href="css/simple-line-icons.css" rel="stylesheet">-->
 
         <link href="./style.css" rel="stylesheet" type="text/css">
     </head>
-    <body>
+    <body id ="index">
 <button id ="logout">Logout <img src="img/lo.png" height=20px></button>
 
 
@@ -311,7 +311,7 @@
                         
                         if(p == "2B"){
                             if($('#second_base').text().indexOf(f) < 1 & $('#second_base').text().indexOf(l) < 1){
-                                $("#second_base").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#secondList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
                             }
                         }
                         

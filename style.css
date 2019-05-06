@@ -2,9 +2,15 @@
     background-color:lightgreen;
 }
 
-body{
+#login{
     background-image: url("img/wall.jpg");   
     color: white;
+}
+
+#index{
+    background-image: url("img/ind.jpg"); 
+    
+    color:white;
 }
 
 #signin{
