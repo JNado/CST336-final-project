@@ -34,7 +34,6 @@
 </head>
 
 <body>
-    <signup id ="signin"><a href="login.html">Already have an account? Press here to return to login page</a></signup>
     <main class="d-flex align-items-center justify-content-center">
         <div class="card">
             <div class="card-body p-4">
@@ -63,6 +62,7 @@
                     </div>
 
                     <button id="signupButton" type="button" class="btn btn-block btn-success">Signup</button>
+                    <button id="returnButton" type="button" class="btn btn-block btn-success">Return to Login Page</button>
                 </form>
             </div>
             <div class="card-footer p-4">
@@ -93,7 +93,7 @@
                 success: function(data, status) {
                     console.log(data);
                     if (data.success) {
-                        window.location = "login.html"
+                        window.location = "login.html";
                     } else {
                         $("#message").html("Bad email or password:" + data.message);
                         $("#message").removeClass("open-hidden");
@@ -103,7 +103,11 @@
                     //console.log(status);
                 }
             });
-        })
+        });
+        
+        $("#returnButton").on('click', function(e) {
+            window.location = "login.html";
+        });
     </script>
 </body>
 

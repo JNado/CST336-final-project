@@ -35,11 +35,10 @@
 </head>
 
 <body id="login">
-    <signup id ="signin"><a href="signup.html">Create a new account</a></signup>
     <main class="d-flex align-items-center justify-content-center">
         <div class="card">
             <div class="card-body p-4">
-                <h1>Account Login</h1>
+                <h1>Account: Login</h1>
                 <p class="text-muted">Sign in to your account</p>
                 <form>
                     <div class="input-group mb-3">
@@ -57,6 +56,7 @@
                     </div>
 
                     <button id="loginButton" type="button" class="btn btn-block btn-success">Login</button>
+                    <button id="signupButton" type="button" class="btn btn-block btn-success">Sign-Up</button>
                 </form>
             </div>
             <div class="card-footer p-4">
@@ -74,6 +74,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <script>
+    /*global $*/
         $("#loginButton").on('click', function(e) {
             $.ajax({
                 type: "post",
@@ -87,7 +88,7 @@
                     // console.log(data);
                     
                     if (data.isAuthenticated) {
-                        window.location = "index.php"
+                        window.location = "index.php";
                     } else {
                         $("#message").html("Bad email or password");
                         $("#message").removeClass("open-hidden");
@@ -97,7 +98,11 @@
                     //console.log(status);
                 }
             });
-        })
+        });
+        
+        $("#signupButton").on('click', function(e) {
+            window.location = "signup.html";
+        });
     </script>
 </body>
 

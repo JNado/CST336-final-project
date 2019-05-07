@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="img/favicon.png">
     <link href="./style.css" rel="stylesheet" type="text/css">
     
-    <title>Baseball Dream Team: Team Creation</title>
+    <title>Baseball Dream Team: Change Password</title>
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -38,16 +38,30 @@
     <main class="d-flex align-items-center justify-content-center">
         <div class="card">
             <div class="card-body p-4">
-                <h1>Team Creation</h1>
-                <p class="text-muted">Enter new team name</p>
+                <h1>Account: Change Password</h1>
                 <form>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">@</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Team Name" name="tName">
+                        <input type="text" class="form-control" placeholder="Email" name="email">
                     </div>
-                    <button id="teamButton" type="button" class="btn btn-block btn-success">Create Team</button>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="icon-lock"></i></span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="Password" name="password">
+                    </div>
+                    
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="icon-lock"></i></span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="New Password" name="new_password">
+                    </div>
+
+                    <button id="changeButton" type="button" class="btn btn-block btn-success">Change Password</button>
                     <button id="returnButton" type="button" class="btn btn-block btn-success">Return to Team Maker</button>
                 </form>
             </div>
@@ -67,28 +81,48 @@
 
     <script>
     /*global $*/
-        $("#returnButton").on('click', function(e) {
-            window.location = "index.php";
-        });
-        
-        $("#teamButton").on('click', function(e) {
+        $("#changeButton").on('click', function(e) {
             $.ajax({
                 type: "post",
-                url: "api.php",
-                dataType: "text",
+                url: "login.php",
+                dataType: "json",
                 data: {
-                    "teamName": $("input[name='tName']").val(),
-                    "op" : "4"
+                    "email": $("input[name='email']").val(),
+                    "password": $("input[name='password']").val(),
                 },
                 success: function(data, status) {
-                    console.log(data);
-                    alert("Team created with name: " + $("input[name='tName']").val());
+                    // console.log(data);
+                    
+                    if (data.isAuthenticated) {
+                        $.ajax({
+                           type: "post",
+                           url: "changepass.php",
+                           dataType: "json",
+                           data: {
+                               "email" : $("input[name='email']").val(),
+                               "password": $("input[name='password']").val(),
+                               "new_password" : $("input[name='new_password']").val()
+                           },
+                           success: function(data, status) {
+                              console.log(data);
+                                $("#message").html(data.message);
+                                $("#message").removeClass("open-hidden");
+                           }
+                           
+                        });
+                    } else {
+                        $("#message").html("Bad email or password");
+                        $("#message").removeClass("open-hidden");
+                    }
                 },
                 complete: function(data, status) { //optional, used for debugging purposes
-                    // console.log(status);
-                    // console.log(data);
+                    //console.log(status);
                 }
             });
+        });
+        
+        $("#returnButton").on("click", function() {
+            window.location = "index.php";
         })
     </script>
 </body>

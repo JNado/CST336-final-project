@@ -26,7 +26,7 @@
     
         $cSession = curl_init();
         
-        curl_setopt($cSession,CURLOPT_URL,"http://lookup-service-prod.mlb.com/json/named.sport_hitting_tm.bam?league_list_id='mlb'&game_type='R'&season='2019'&player_id='$pId'");
+        curl_setopt($cSession,CURLOPT_URL,"http://lookup-service-prod.mlb.com/json/named.sport_hitting_tm.bam?league_list_id='mlb'&game_type='R'&season='2017'&player_id='$pId'");
         curl_setopt($cSession,CURLOPT_RETURNTRANSFER,true);
         curl_setopt($cSession,CURLOPT_HEADER, false);
         
@@ -49,7 +49,7 @@
     
         $cSession = curl_init();
         
-        curl_setopt($cSession,CURLOPT_URL,"http://lookup-service-prod.mlb.com/json/named.sport_pitching_tm.bam?league_list_id='mlb'&game_type='R'&season='2019'&player_id='$pId'");
+        curl_setopt($cSession,CURLOPT_URL,"http://lookup-service-prod.mlb.com/json/named.sport_pitching_tm.bam?league_list_id='mlb'&game_type='R'&season='2017'&player_id='$pId'");
         curl_setopt($cSession,CURLOPT_RETURNTRANSFER,true);
         curl_setopt($cSession,CURLOPT_HEADER, false);
         
@@ -69,7 +69,7 @@
         session_start();
         $host = "127.0.0.1";
         $dbname = "final_project";
-        $username = "jnado";
+        $username = "root";
         $password = "";
         
         if  (strpos($_SERVER['HTTP_HOST'], 'herokuapp') !== false) {
@@ -91,5 +91,137 @@
                             ":name" => $_POST['teamName']));
         
         // echo json_encode(array("true", "true"));
+    } else if ($_POST['op'] == 5) {
+        session_start();
+        $host = "127.0.0.1";
+        $dbname = "final_project";
+        $username = "root";
+        $password = "";
+        
+        if  (strpos($_SERVER['HTTP_HOST'], 'herokuapp') !== false) {
+            $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+            $host = $url["host"];
+            $dbname = substr($url["path"], 1);
+            $username = $url["user"];
+            $password = $url["pass"];
+        } 
+        
+        $dbConn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+    
+        $sql = "SELECT DISTINCT team_name, id FROM teams WHERE user_id=:id";
+        $stmt = $dbConn->prepare($sql);
+    
+        $stmt->execute(array(":id" => $_SESSION['id']));
+        
+        $records = $stmt->fetchAll();
+        echo json_encode($records);
+    } else if ($_POST['op'] == 6) {
+        $host = "127.0.0.1";
+        $dbname = "final_project";
+        $username = "root";
+        $password = "";
+        
+        if  (strpos($_SERVER['HTTP_HOST'], 'herokuapp') !== false) {
+            $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+            $host = $url["host"];
+            $dbname = substr($url["path"], 1);
+            $username = $url["user"];
+            $password = $url["pass"];
+        } 
+        
+        $dbConn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+    
+        $sql = "INSERT INTO players (id, team_id, first_name, last_name, type, b_avg, ops, slg) VALUES " .
+                "(:id, :team, :first, :last, :pos, :avg, :o, :s)";
+        $stmt = $dbConn->prepare($sql);
+    
+        $stmt->execute(array(":id" => $_POST['playerId'],
+                            ":team" => $_POST['teamId'],
+                            ":first" => $_POST['playerFirst'],
+                            ":last" => $_POST['playerLast'],
+                            ":pos" => $_POST['type'],
+                            ":avg" => $_POST['b_avg'],
+                            ":o" => $_POST['ops'],
+                            ":s" => $_POST['slg']));
+        
+        // echo json_encode(array("true", "true"));
+    } else if ($_POST['op'] == 7) {
+        $host = "127.0.0.1";
+        $dbname = "final_project";
+        $username = "root";
+        $password = "";
+        
+        if  (strpos($_SERVER['HTTP_HOST'], 'herokuapp') !== false) {
+            $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+            $host = $url["host"];
+            $dbname = substr($url["path"], 1);
+            $username = $url["user"];
+            $password = $url["pass"];
+        } 
+        
+        $dbConn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+    
+        $sql = "INSERT INTO players (id, team_id, first_name, last_name, type, era, win, loss) VALUES " .
+                "(:id, :team, :first, :last, :pos, :era, :w, :l)";
+        $stmt = $dbConn->prepare($sql);
+    
+        $stmt->execute(array(":id" => $_POST['playerId'],
+                            ":team" => $_POST['teamId'],
+                            ":first" => $_POST['playerFirst'],
+                            ":last" => $_POST['playerLast'],
+                            ":pos" => $_POST['type'],
+                            ":era" => $_POST['era'],
+                            ":w" => $_POST['w'],
+                            ":l" => $_POST['l']));
+        
+        // echo json_encode(array("true", "true"));
+    } else if ($_POST['op'] == 8) {
+        $host = "127.0.0.1";
+        $dbname = "final_project";
+        $username = "root";
+        $password = "";
+        
+        if  (strpos($_SERVER['HTTP_HOST'], 'herokuapp') !== false) {
+            $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+            $host = $url["host"];
+            $dbname = substr($url["path"], 1);
+            $username = $url["user"];
+            $password = $url["pass"];
+        } 
+        
+        $dbConn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+    
+        $sql = "SELECT * FROM players WHERE team_id=:id";
+        $stmt = $dbConn->prepare($sql);
+    
+        $stmt->execute(array(":id" => $_POST['teamId']));
+        
+        $records = $stmt->fetchAll();
+        echo json_encode($records);
+    } else if ($_POST['op'] == 9) {
+        $host = "127.0.0.1";
+        $dbname = "final_project";
+        $username = "root";
+        $password = "";
+        
+        if  (strpos($_SERVER['HTTP_HOST'], 'herokuapp') !== false) {
+            $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+            $host = $url["host"];
+            $dbname = substr($url["path"], 1);
+            $username = $url["user"];
+            $password = $url["pass"];
+        } 
+        
+        $dbConn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+    
+        $sql = "DELETE FROM teams WHERE id=:id";
+        $stmt = $dbConn->prepare($sql);
+    
+        $stmt->execute(array(":id" => $_POST['teamId']));
     }
 ?>

@@ -2,11 +2,7 @@
     session_start();
 
     if (!isset($_SESSION['email'])){
-
-      header("Location: index.html");
-
       header("Location: login.html");
-
     }
 ?>
 
@@ -24,10 +20,11 @@
         <link href="./style.css" rel="stylesheet" type="text/css">
     </head>
     <body id ="index">
-<button id ="logout">Logout <img src="img/lo.png" height=20px></button>
-
-
-
+        <button id ="logout">Logout <img src="img/lo.png" height=20px></button>
+        <button id ="creator">Create New Team <img src="img/lo.png" height=20px></button>
+        <button id ="deleteTeam">Delete Current Team</button>
+        <button id ="changePass">Change Password</button>
+        
         <style type="text/css">
             th, td {
                 padding: 15px;
@@ -35,25 +32,28 @@
         </style>
     </head>
     <body>
-        
-        <div id="ruleset">
-            <h3>Baseball Dream Team - Rules and Usage: </h3>
-            <p>
-                1. You can have any players you want, but only in positions that they are declared in.<br>
-                2. You can have a maximum of 25 players, just like the active roster of the MLB. <br>
-                3. Search for a player using the search bar at the top and select the player you'd like from the options provided. <br>
-                4. You can refine the search by selecting whether the player is active or not with the radio buttons. <br>
-                5. Search using last name only, this will provide a more thorough search of the player database. <br>
-                6. All stats data will be for the current regular season. <br>
-                7. To switch between your different teams, select which team you'd like to view from the drop-down menu at the top of the screen. <br>
-            </p>
-        </div>
+        <br><br>
+        <!--<div id="ruleset">-->
+        <!--    <h3>Baseball Dream Team - Rules and Usage: </h3>-->
+        <!--    <p>-->
+        <!--        1. You can have any players you want, but only in positions that they are declared in.<br>-->
+        <!--        2. You can have a maximum of 25 players, just like the active roster of the MLB. <br>-->
+        <!--        3. Search for a player using the search bar at the top and select the player you'd like from the options provided. <br>-->
+        <!--        4. Search using last name only, this will provide a more thorough search of the player database. <br>-->
+        <!--        5. All stats data will be for the 2017 regular season. <br>-->
+        <!--        6. To switch between your different teams, select which team you'd like to view from the "Available Teams" table below. <br>-->
+        <!--    </p>-->
+        <!--</div>-->
         
         <div id="teamnav">
-            <select id="teamList">
-                
-            </select>
+            <h3 id="teamLabel">Available Teams: </h3>
+            <table>
+                <tr id="teamList">
+                    
+                </tr>
+            </table>
         </div>
+        
         
         <div id="search">
             <h3>Last Name Search: </h3><br>
@@ -73,7 +73,7 @@
                     <th>Team</th>
                     <th>Player ID</th>
                     <th>Player Position</th>
-                    <th><a href="#myModal" data-toggle='modal' onclick='modal()'> (Player Position Guide)</a></th><!--<img src="img/guide.png">-->
+                    <th><a href="#myModal" data-toggle='modal' onclick='modal(1)'> (Player Position Guide)</a></th><!--<img src="img/guide.png">-->
                 </tr>
             </table>
             
@@ -210,26 +210,82 @@
           
         </div>
       </div>
-          
-            
-
+    
         <script src="./JQuery.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
         <script>
-
-            $("#logout").on("click", function() {
-                window.location = "logout.php";
-            })
-            
-          
-
         /*global $*/
+            var currTeamID = 0;
+            var teamTotal = 0;
 
+            $.ajax({
+                type: "POST",
+                url: "api.php",
+                dataType: "json",
+                data: {
+                    'op' : '5'
+                },
+                success: function(data, status) {
+                    // console.log(data);
+                    if (data.length == 0) { $("#teamLabel").html($("#teamLabel").html() + " No teams have been created yet"); }
+                    else {
+                        $("#teamLabel").html($("#teamLabel").html() + "(Current = " + data[0].team_name + ")");
+                        currTeamID = data[0].id;
+    
+                        data.forEach(function(element) {
+                            $("#teamList").append("<td> <input type='button' name='teamButton' data-id='" + element.id + "' value='" + element.team_name + "'/>");
+                        });
+                        
+                        displayTeam(currTeamID);
+                        
+                        $("input[name='teamButton']").click(function() {
+                            var holdTeamId = $(this).attr("data-id");
+                            
+                            displayTeam(holdTeamId);
+                        });
+                    }
+                },
+                complete: function(data, status) {
+                    // console.log(status);
+                }
+            });
             $(document).ready(function() {
-            //This populates the drop down selection  
-            // source api : https://appac.github.io/mlb-data-api-docs/
+                $("#logout").on("click", function() {
+                    window.location = "logout.php";
+                });
+                
+                $("#creator").on("click", function() {
+                    window.location = "team.html";
+                });
+                
+                $("#deleteTeam").on("click", function() {
+                     $.ajax({
+                        type: "POST",
+                        url: "api.php",
+                        dataType: "text",
+                        data: {
+                            'teamId' : currTeamID,
+                            'op' : '9'
+                        },
+                        success: function(data, status) {
+                            // console.log(data);
+                            window.location.reload(true);
+                        },
+                        complete: function(data, status) {
+                            console.log(data);
+                            console.log(status);
+                        }
+                    });
+                });
+                
+                $("#changePass").on("click", function() {
+                    window.location = "changepass.html";
+                });
+               
+                //This populates the drop down selection  
+                // source api : https://appac.github.io/mlb-data-api-docs/
                 $("#searchButton").on("click", function() {
                     $.ajax({
                         type: "POST",
@@ -241,31 +297,38 @@
                             'playerName' : $("#lookUp").val(),
                             'op' : '1'
                         },
+                        
                         success: function(data, status) {
-                            console.log(data);
+                            // console.log(data);
                 
-                             $("#resultsList").empty();
-                            data.search_player_all.queryResults.row.forEach(function(element) {
+                            $("#resultsList tr").not(":first").remove();
+                            
+                            if (data.search_player_all.queryResults.totalSize > 1) {
+                                data.search_player_all.queryResults.row.forEach(function(element) {
+                                    $("#resultsList").append("<tr>" +
+                                                                 "<td><input type='checkbox' name='optionList' class='player_choice' id='" + element['player_id'] +"' pos='"+ element['position'] +"' firstN = '"+ element['name_first']+"' lastN = '" + element['name_last']+"' />&nbsp;</td>" + 
+                                                                 "<td>" + element['name_first'] + "</td>" +
+                                                                 "<td>" + element['name_last'] + "</td>" +
+                                                                 "<td>" + element['team_full'] + "</td>" +
+                                                                 "<td>" + element['player_id'] + "</td>" +
+                                                                 "<td>" + element['position'] + "</td>" +
+                                                             "</tr>");
+                                });
+                            } else {
                                 $("#resultsList").append("<tr>" +
-                                                         "<td><input type='checkbox' name='optionList' class='player_choice' id='" + element['player_id'] +"' pos='"+ element['position'] +"' firstN = '"+ element['name_first']+"' lastN = '" + element['name_last']+"' />&nbsp;</td>" + 
-                                                         "<td>" + element['name_first'] + "</td>" +
-                                                         "<td>" + element['name_last'] + "</td>" +
-                                                         "<td>" + element['team_full'] + "</td>" +
-                                                         "<td>" + element['player_id'] + "</td>" +
-                                                         "<td>" + element['position'] + "</td>" +
+                                                             "<td><input type='checkbox' name='optionList' class='player_choice' id='" + data.search_player_all.queryResults.row.player_id +"' pos='"+ data.search_player_all.queryResults.row.position +"' firstN = '"+ data.search_player_all.queryResults.row.name_first +"' lastN = '" + data.search_player_all.queryResults.row.name_last +"' />&nbsp;</td>" + 
+                                                             "<td>" + data.search_player_all.queryResults.row.name_first + "</td>" +
+                                                             "<td>" + data.search_player_all.queryResults.row.name_last + "</td>" +
+                                                             "<td>" + data.search_player_all.queryResults.row.team_full + "</td>" +
+                                                             "<td>" + data.search_player_all.queryResults.row.player_id + "</td>" +
+                                                             "<td>" + data.search_player_all.queryResults.row.position + "</td>" +
                                                          "</tr>");
-                                                         
-                                
-                                // if(element['position'] == "P"){
-                                //     $("#pitcherList").append("<tr><th>"+ element["name_first"] +"</th><th>"+ element["name_last] +"</th><th>"+ "@ERA@" +"</th><th>Win/Loss</th></tr>");
-                                // }
-                                
-                            });
-                             
+                            }
                              
                         },
+                        
                         complete: function(data, status) {
-                            console.log(status);
+                            // console.log(status);
                         }
                     });
                 });
@@ -276,10 +339,10 @@
                             //alert($(this).attr("pos"));
                             
                             if($(this).attr("pos") == "P"){
-                                idFunctionPitch($(this).attr("id"), $(this).attr("firstN"), $(this).attr("lastN"));
+                                idFunctionPitch($(this).attr("id"), $(this).attr("firstN"), $(this).attr("lastN"), 1);
                             }
                             else{
-                                idFunctionBat($(this).attr("id"),$(this).attr("firstN"), $(this).attr("lastN"), $(this).attr("pos"));
+                                idFunctionBat($(this).attr("id"),$(this).attr("firstN"), $(this).attr("lastN"), $(this).attr("pos"), 1);
                             }
                             
                            
@@ -288,7 +351,8 @@
                 
                 });
             });
-            function idFunctionBat(id, f, l, p){
+            
+            function idFunctionBat(id, f, l, p, piv){
                 $.ajax({
                     type: "POST",
                     url: "api.php",
@@ -299,80 +363,96 @@
                         'op' : '2'
                     },
                     success: function(data, status) {
-                        console.log(data);
+                        // console.log(data);
+                        
+                        if (data.sport_hitting_tm.queryResults.totalSize == 0) { 
+                            alert("There are no available statistics for this player.")
+                            return;
+                        }
                         
                         //Depending on players position, put players in list
                         if(p == "1B"){
                             if($('#first_base').text().indexOf(f) < 1 & $('#first_base').text().indexOf(l) < 1){
-                                $("#firstList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#firstList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
                             }
                         }
                         
                         if(p == "2B"){
                             if($('#second_base').text().indexOf(f) < 1 & $('#second_base').text().indexOf(l) < 1){
-                                $("#secondList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#secondList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
                             }
                         }
                         
                         if(p == "3B"){
                             alert();
                             if($('#third_base').text().indexOf(f) < 1 & $('#third_base').text().indexOf(l) < 1){
-                                $("#thirdList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#thirdList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
                             }
                         }
                         
                         if(p == "C"){
                             if($('#catcher').text().indexOf(f) < 1 & $('#catcher').text().indexOf(l) < 1){
-                                $("#catcherList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#catcherList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
                             }
                         }
                         
                         if(p == "SS"){
                             if($('#short_stop').text().indexOf(f) < 1 & $('#short_stop').text().indexOf(l) < 1){
-                                $("#shortList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#shortList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
                             }    
                         }
                         
                         if(p == "LF"){
                             if($('#left_field').text().indexOf(f) < 1 & $('#left_field').text().indexOf(l) < 1){
-                                $("#leftList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#leftList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
                             }            
                         }
                         
                         if(p == "RF"){
                             if($('#right_field').text().indexOf(f) < 1 & $('#right_field').text().indexOf(l) < 1){
-                                $("#rightList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#rightList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
                             }
                         }
                         
                         if(p == "CF"){
                             if($('#center_field').text().indexOf(f) < 1 & $('#center_field').text().indexOf(l) < 1){
-                                $("#centerList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["obp"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#centerList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
                             }                 
                         }
                         
-                        
-                        
-                        // data.search_player_all.queryResults.row.forEach(function(element) {
-                        //     $("#resultsList").append("<tr>" +
-                        //                              "<td><input type='checkbox' name='optionList' class='player_choice' id='" + element['player_id'] +"'/>&nbsp;</td>" + 
-                        //                              "<td>" + element['name_first'] + "</td>" +
-                        //                              "<td>" + element['name_last'] + "</td>" +
-                        //                              "<td>" + element['team_full'] + "</td>" +
-                        //                              "<td>" + element['player_id'] + "</td>" +
-                        //                              "</tr>");
-                        // });
-                         
-                         
+                        if (piv == 1) {
+                            //add player to database
+                            $.ajax({
+                                type: "POST",
+                                url: "api.php",
+                                dataType: "json",
+                                data: {
+                                    'teamId' : currTeamID,
+                                    'playerId' : id,
+                                    'playerFirst' : f,
+                                    'playerLast' : l,
+                                    'type' : p,
+                                    'b_avg' : data.sport_hitting_tm.queryResults.row["avg"],
+                                    'ops' : data.sport_hitting_tm.queryResults.row["ops"],
+                                    'slg' : data.sport_hitting_tm.queryResults.row["slg"],
+                                    'op' : '6'
+                                },
+                                success: function(data, status) {
+                                    // console.log(data);
+                                },
+                                complete: function(data, status) {
+                                    // console.log(status);
+                                }
+                            });
+                        }
                     },
                     complete: function(data, status) {
-                        console.log(status);
+                        // console.log(status);
                     }
                 });
             }
-            
-            
-            function idFunctionPitch(id, f, l){
+        
+            function idFunctionPitch(id, f, l, piv){
                 $.ajax({
                     type: "POST",
                     url: "api.php",
@@ -383,27 +463,92 @@
                         'op' : '3'
                     },
                     success: function(data, status) {
-                        console.log(data);
+                        // console.log(data);
     
-                        //WHEN I TRY TO ADD SANDY BAEZ, I GET AN ERROR? HE'S A PTCHER RIGHT? HE DOESNT HAVE PITCHING STATS? happens with a lot of pitchers?
+                        if (data.sport_pitching_tm.queryResults.totalSize == 0) { 
+                            alert("There are no available statistics for this player.")
+                            return;
+                        }
                         
                         //This checks to see if a player was already added. if player is already in list, dont add again.
                         if($('#pitcher').text().indexOf(f) < 1 & $('#pitcher').text().indexOf(l) < 1){
                             $("#pitcherList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_pitching_tm.queryResults.row['era'] +"</th><th>"+ data.sport_pitching_tm.queryResults.row['w'] + " / " + data.sport_pitching_tm.queryResults.row['l'] + "</th></tr>");
                         }
                         
-                    
+                        if (piv == 1) {
+                            $.ajax({
+                                type: "POST",
+                                url: "api.php",
+                                dataType: "text",
+                                data: {
+                                    'teamId' : currTeamID,
+                                    'playerId' : id,
+                                    'playerFirst' : f,
+                                    'playerLast' : l,
+                                    'type' : "P",
+                                    'era' : data.sport_pitching_tm.queryResults.row["era"],
+                                    'w' : data.sport_pitching_tm.queryResults.row["w"],
+                                    'l' : data.sport_pitching_tm.queryResults.row["l"],
+                                    'op' : '7'
+                                },
+                                success: function(data, status) {
+                                    // console.log(data);
+                                },
+                                complete: function(data, status) {
+                                    // console.log(status);
+                                }
+                            });
+                        }
                     },
                     complete: function(data, status) {
-                        console.log(status);
+                        // console.log(status);
                     }
                 });
             }
             
+            function displayTeam(id) {
+                $.ajax({
+                    type: "POST",
+                    url: "api.php",
+                    dataType: "json",
+                    data: {
+                        
+                        'teamId' : id,
+                        'op' : '8'
+                    },
+                    success: function(data, status) {
+                        // console.log(data);
+                        teamTotal += data.length;
+
+                        if (data.length > 1) {
+                            data.forEach(function(element) {
+                                if (element.type == "P") {
+                                    idFunctionPitch(element.id, element.first_name, element.last_name, 0);
+                                } else {
+                                    idFunctionBat(element.id, element.first_name, element.last_name, element.type, 0);
+                                }
+                            });
+                        } else {
+                            if (data[0].type == "P") {
+                                    idFunctionPitch(data[0].id, data[0].first_name, data[0].last_name, 0);
+                                } else {
+                                    idFunctionBat(data[0].id, data[0].first_name, data[0].last_name, data[0].type, 0);
+                            }
+                        }
+                    },
+                    complete: function(data, status) {
+                        // console.log(status);
+                    }
+                });
+            }
             
             //shows a guide (for dumbasses like me) to see what the positions actually mean
             function modal(i){
-                 $("#omD").html("<img src='img/guide.png' height=400em>");
+                 if (i == 0) {
+                    $("#omD").html("<h3>Team deleted, refreshing page.</h3>"); 
+                 } else if (i == 1) {
+                    $("#omD").html("<img src='img/guide.png' height=400em>");
+                 }
             }
             
         </script>

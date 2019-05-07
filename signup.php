@@ -55,12 +55,7 @@
       
       $postedPassword = $_POST["password"][0];
 
-      // Use BCrypt password hashing
-      $options = [
-          'cost' => 11,
-      ];
-
-      $hashedPassword = password_hash($postedPassword, PASSWORD_BCRYPT, $options);
+      $hashedPassword = password_hash($postedPassword, PASSWORD_DEFAULT);
 
       // TODO: do stuff to get the $results which is an associative array
       $host = "127.0.0.1";
