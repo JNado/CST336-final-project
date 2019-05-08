@@ -109,7 +109,7 @@
         $dbConn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
         $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
     
-        $sql = "SELECT DISTINCT team_name, id FROM teams WHERE user_id=:id";
+        $sql = "SELECT * FROM teams WHERE user_id=:id";
         $stmt = $dbConn->prepare($sql);
     
         $stmt->execute(array(":id" => $_SESSION['id']));
@@ -195,7 +195,8 @@
         $dbConn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
         $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
     
-        $sql = "SELECT * FROM players WHERE team_id=:id";
+        $sql = "select DISTINCT players.id, first_name, last_name, type, b_avg, ops, slg, era, win, loss from players join teams where team_id=:id";
+        
         $stmt = $dbConn->prepare($sql);
     
         $stmt->execute(array(":id" => $_POST['teamId']));
