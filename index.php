@@ -386,7 +386,6 @@
                         }
                         
                         if(p == "3B"){
-                            alert();
                             if($('#third_base').text().indexOf(f) < 1 & $('#third_base').text().indexOf(l) < 1){
                                 $("#thirdList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
                             }
