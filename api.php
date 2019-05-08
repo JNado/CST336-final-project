@@ -87,7 +87,7 @@
                 "(:id, :name)";
         $stmt = $dbConn->prepare($sql);
     
-        $stmt->execute(array(":id" => $_SESSION['id'],
+        $stmt->execute(array(":id" => $_POST['user_id'],
                             ":name" => $_POST['teamName']));
         
         // echo json_encode(array("true", "true"));
@@ -110,6 +110,7 @@
         $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
     
         $sql = "SELECT * FROM teams WHERE user_id=:id";
+        
         $stmt = $dbConn->prepare($sql);
     
         $stmt->execute(array(":id" => $_SESSION['id']));

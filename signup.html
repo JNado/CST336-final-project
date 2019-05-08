@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="img/favicon.png">
     <link href="./style.css" rel="stylesheet" type="text/css">
-    <title>CSUMB Dashboard Demo Registration</title>
+    <title>Baseball Dream Team: Signup</title>
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -37,7 +37,7 @@
     <main class="d-flex align-items-center justify-content-center">
         <div class="card">
             <div class="card-body p-4">
-                <h1>Registration</h1>
+                <h1>Baseball Dream Team: Signup</h1>
                 <p class="text-muted">Sign up for a new account</p>
                 <form>
                     <div class="input-group mb-3">
@@ -60,6 +60,13 @@
                         </div>
                         <input type="password" class="form-control" placeholder="Confirm Password" name="signupPasswordConfirmation">
                     </div>
+                    
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">@</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Team Name" name="teamName">
+                    </div>
 
                     <button id="signupButton" type="button" class="btn btn-block btn-success">Signup</button>
                     <button id="returnButton" type="button" class="btn btn-block btn-success">Return to Login Page</button>
@@ -77,8 +84,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <script>
+    /*global $*/
         $("#signupButton").on('click', function(e) {
-
             $.ajax({
                 type: "post",
                 url: "signup.php",
@@ -89,6 +96,7 @@
                         $("input[name='signupPassword']").val(),
                         $("input[name='signupPasswordConfirmation']").val()
                         ],
+                    "teamName" : $("input[name='teamName']").val()
                 },
                 success: function(data, status) {
                     console.log(data);
@@ -100,7 +108,7 @@
                     }
                 },
                 complete: function(data, status) { //optional, used for debugging purposes
-                    //console.log(status);
+                    // console.log(status);
                 }
             });
         });

@@ -66,19 +66,19 @@
   
        //when connecting from Heroku
 
-    if  (strpos($_SERVER['HTTP_HOST'], 'herokuapp') !== false) {
-
-        $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
-
-        $host = $url["host"];
-
-        $dbname = substr($url["path"], 1);
-
-        $username = $url["user"];
-
-        $password = $url["pass"];
-
-    } 
+      if  (strpos($_SERVER['HTTP_HOST'], 'herokuapp') !== false) {
+  
+          $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+  
+          $host = $url["host"];
+  
+          $dbname = substr($url["path"], 1);
+  
+          $username = $url["user"];
+  
+          $password = $url["pass"];
+  
+      } 
     
   
   
@@ -96,10 +96,18 @@
                               ":hashedPassword" => $hashedPassword));
 
         $_SESSION["email"] = $record["email"];
-        $_SESSION["isAdmin"] = false;
-  
+        $id = $dbConn->lastInsertId();
+      
+        $sql = "INSERT INTO teams (user_id, team_name) VALUES " .
+                "(:id, :name)";
+        $stmt = $dbConn->prepare($sql);
+    
+        $stmt->execute(array(":id" => $id,
+                            ":name" => $_POST['teamName']));
+                            
         // Sending back down as JSON
-        echo json_encode(array("success" => true));
+        echo json_encode(array("success" => true,
+                               "message" => "wtf"));
   
         } catch (PDOException $e) {
           echo json_encode(array(
