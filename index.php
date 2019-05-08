@@ -242,6 +242,8 @@
                         
                         $("input[name='teamButton']").click(function() {
                             var holdTeamId = $(this).attr("data-id");
+                            currTeamID = holdTeamId;
+                            $("#teamLabel").html($("Available Teams: (Current = " + $(this).attr("value") + ")"));
                             
                             displayTeam(holdTeamId);
                         });
