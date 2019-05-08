@@ -21,8 +21,6 @@
     </head>
     <body id ="index">
         <button id ="logout">Logout <img src="img/lo.png" height=20px></button>
-        <button id ="creator">Create New Team <img src="img/lo.png" height=20px></button>
-        <button id ="deleteTeam">Delete Current Team</button>
         <button id ="changePass">Change Password</button>
         
         <style type="text/css">
@@ -33,25 +31,20 @@
     </head>
     <body>
         <br><br>
-        <!--<div id="ruleset">-->
-        <!--    <h3>Baseball Dream Team - Rules and Usage: </h3>-->
-        <!--    <p>-->
-        <!--        1. You can have any players you want, but only in positions that they are declared in.<br>-->
-        <!--        2. You can have a maximum of 25 players, just like the active roster of the MLB. <br>-->
-        <!--        3. Search for a player using the search bar at the top and select the player you'd like from the options provided. <br>-->
-        <!--        4. Search using last name only, this will provide a more thorough search of the player database. <br>-->
-        <!--        5. All stats data will be for the 2017 regular season. <br>-->
-        <!--        6. To switch between your different teams, select which team you'd like to view from the "Available Teams" table below. <br>-->
-        <!--    </p>-->
-        <!--</div>-->
+        <div id="ruleset">
+            <h3>Baseball Dream Team - Rules and Usage: </h3>
+            <p>
+                1. You can have any players you want, but only in positions that they are declared in.<br>
+                2. You can have a maximum of 25 players, just like the active roster of the MLB. <br>
+                3. Search for a player using the search bar at the top and select the player you'd like from the options provided. <br>
+                4. Search using last name only, this will provide a more thorough search of the player database. <br>
+                5. All stats data will be for the 2017 regular season. <br>
+                6. To switch between your different teams, select which team you'd like to view from the "Available Teams" table below. <br>
+            </p>
+        </div>
         
         <div id="teamnav">
-            <h3 id="teamLabel">Available Teams: </h3>
-            <table>
-                <tr id="teamList">
-                    
-                </tr>
-            </table>
+            <h3 id="teamLabel">Team Name: </h3>
         </div>
         
         
@@ -231,7 +224,7 @@
                     // console.log(data);
                     if (data.length == 0) { $("#teamLabel").html($("#teamLabel").html() + " No teams have been created yet"); }
                     else {
-                        $("#teamLabel").html($("#teamLabel").html() + "(Current = " + data[0].team_name + ")");
+                        $("#teamLabel").html($("#teamLabel").html() + data[0].team_name);
                         currTeamID = data[0].id;
     
                         data.forEach(function(element) {
@@ -240,13 +233,13 @@
                         
                         displayTeam(currTeamID);
                         
-                        $("input[name='teamButton']").click(function() {
-                            var holdTeamId = $(this).attr("data-id");
-                            currTeamID = holdTeamId;
-                            $("#teamLabel").html($("Available Teams: (Current = " + $(this).attr("value") + ")"));
+                        // $("input[name='teamButton']").click(function() {
+                        //     var holdTeamId = $(this).attr("data-id");
+                        //     currTeamID = holdTeamId;
+                        //     $("#teamLabel").html($("Available Teams: (Current = " + $(this).attr("value") + ")"));
                             
-                            displayTeam(holdTeamId);
-                        });
+                        //     displayTeam(holdTeamId);
+                        // });
                     }
                 },
                 complete: function(data, status) {
@@ -256,30 +249,6 @@
             $(document).ready(function() {
                 $("#logout").on("click", function() {
                     window.location = "logout.php";
-                });
-                
-                $("#creator").on("click", function() {
-                    window.location = "team.html";
-                });
-                
-                $("#deleteTeam").on("click", function() {
-                     $.ajax({
-                        type: "POST",
-                        url: "api.php",
-                        dataType: "text",
-                        data: {
-                            'teamId' : currTeamID,
-                            'op' : '9'
-                        },
-                        success: function(data, status) {
-                            // console.log(data);
-                            window.location.reload(true);
-                        },
-                        complete: function(data, status) {
-                            console.log(data);
-                            console.log(status);
-                        }
-                    });
                 });
                 
                 $("#changePass").on("click", function() {
@@ -338,16 +307,12 @@
                 $("#addResult").on("click", function() {
                     $("[name=optionList]").each(function() {
                         if ($(this).is(":checked")) {
-                            //alert($(this).attr("pos"));
-                            
                             if($(this).attr("pos") == "P"){
                                 idFunctionPitch($(this).attr("id"), $(this).attr("firstN"), $(this).attr("lastN"), 1);
                             }
                             else{
                                 idFunctionBat($(this).attr("id"),$(this).attr("firstN"), $(this).attr("lastN"), $(this).attr("pos"), 1);
                             }
-                            
-                           
                         }
                     });
                 
