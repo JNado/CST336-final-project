@@ -452,7 +452,7 @@
                         }
                         
                         $("input[name='deleteButtonT']").click(function() {
-                            $("#" + id + "table").remove();
+                            $("#" + $(this).attr("data-id") + "table").remove();
                             removePlayerDB(id);
                         });
                         
@@ -518,7 +518,7 @@
                         }
                         
                         $("input[name='deleteButtonP']").click(function() {
-                            $("#" + id + "table").remove();
+                            $("#" + $(this).attr("data-id") + "table").remove();
                             removePlayerDB(id);
                         });
                         
