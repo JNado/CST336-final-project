@@ -22,6 +22,8 @@
     <body id ="index">
         <button id ="logout">Logout <img src="img/lo.png" height=20px></button>
         <button id ="changePass">Change Password</button>
+        <button href="#myModal" data-toggle='modal' id ="stats">Team Statistics</button>
+        
         
         <style type="text/css">
             th, td {
@@ -66,7 +68,7 @@
                     <th>Team</th>
                     <th>Player ID</th>
                     <th>Player Position</th>
-                    <th><a href="#myModal" data-toggle='modal' onclick='modal(1)'> (Player Position Guide)</a></th><!--<img src="img/guide.png">-->
+                    <th><a href="#myModal" data-toggle='modal' onclick='modal(1)'> (Player Position Guide)</a></th>
                 </tr>
             </table>
             
@@ -200,7 +202,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Player Position Guide</h4>
+              <h4 id="titleM" class="modal-title">Player Position Guide</h4>
             </div>
             <div class="modal-body">
               <p id="omD"></p>
@@ -264,6 +266,9 @@
                     window.location = "changepass.html";
                 });
                
+                $("#stats").on("click", function() {
+                    modal(2);
+                });
                 //This populates the drop down selection  
                 // source api : https://appac.github.io/mlb-data-api-docs/
                 $("#searchButton").on("click", function() {
@@ -355,7 +360,7 @@
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
-                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
+                                                       "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>"  + 
                                                        "</tr>");
                             }
                         }
@@ -368,7 +373,7 @@
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
-                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
+                                                       "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>"  + 
                                                        "</tr>");
                             }
                         }
@@ -381,7 +386,7 @@
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
-                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
+                                                       "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>"  + 
                                                        "</tr>");
                             }
                         }
@@ -394,7 +399,7 @@
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
-                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
+                                                       "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>" + 
                                                        "</tr>");
                             }
                         }
@@ -407,7 +412,7 @@
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
-                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
+                                                       "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>"  + 
                                                        "</tr>");
                             }    
                         }
@@ -420,7 +425,7 @@
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
-                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
+                                                       "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>"  + 
                                                        "</tr>");
                             }            
                         }
@@ -433,7 +438,7 @@
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
-                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
+                                                       "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>"  + 
                                                        "</tr>");
                             }
                         }
@@ -446,7 +451,7 @@
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
-                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
+                                                       "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>"  + 
                                                        "</tr>");
                             }                 
                         }
@@ -513,7 +518,7 @@
                                                      "<th>" + l +"</th>" +
                                                      "<th>" + data.sport_pitching_tm.queryResults.row['era'] +"</th>" + 
                                                      "<th>" + data.sport_pitching_tm.queryResults.row['w'] + " / " + data.sport_pitching_tm.queryResults.row['l'] + "</th>" + 
-                                                     "<th><input type='button' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>" +
+                                                     "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>" +
                                                      "</tr>");
                         }
                         
@@ -582,7 +587,7 @@
                         'op' : '8'
                     },
                     success: function(data, status) {
-                        // console.log(data);
+                        console.log(data);
                         teamTotal += data.length;
 
                         if (data.length > 1) {
@@ -610,12 +615,66 @@
             //shows a guide (for dumbasses like me) to see what the positions actually mean
             function modal(i){
                  if (i == 0) {
-                    $("#omD").html("<h3>Team deleted, refreshing page.</h3>"); 
+                     $("#titleM").html("<h3>Deletion</h3>");
+                    $("#omD").html("<h3>Player deleted, refreshing page.</h3>"); 
                  } else if (i == 1) {
                     $("#omD").html("<img src='img/guide.png' height=400em>");
+                 }else if (i == 2) {
+                 
+                    $("#titleM").html("<h3>My Team Statistics</h3>");
+                    //Team name
+                    
+                    $.ajax({
+                    type: "POST",
+                    url: "api.php",
+                    dataType: "json",
+                    data: {
+                        
+                        'op' : '10'
+                    },
+                    success: function(data, status) {
+                        console.log(status);
+                        console.log(data);
+                        
+                        $("#omD").html("Team name : "+data[0][0]);
+                        getCount(data[0][0]);
+                        
+                    },
+                    complete: function(data, status) {
+                        console.log(status);
+                    }
+                });
+                
+                
+                    
+                    
+                    
+                    
                  }
             }
-            
+            function getCount(x){
+                //# of players on team
+                //alert(x);
+                 $.ajax({
+                    type: "POST",
+                    url: "api.php",
+                    dataType: "json",
+                    data: {
+                        'teamName' : x,
+                        'op' : '11'
+                    },
+                    success: function(data, status) {
+                        console.log(status);
+                        console.log(data);
+                        
+                        $("#omD").append("<br>Number of players on team : "+ data[0][0]);
+                        
+                    },
+                    complete: function(data, status) {
+                        console.log(status);
+                    }
+                });
+            }
         </script>
     </body>
 </html>
