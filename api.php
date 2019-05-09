@@ -221,9 +221,9 @@
         $dbConn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
         $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
     
-        $sql = "DELETE FROM teams WHERE id=:id";
+        $sql = "DELETE FROM players WHERE id=:id";
         $stmt = $dbConn->prepare($sql);
     
-        $stmt->execute(array(":id" => $_POST['teamId']));
+        $stmt->execute(array(":id" => $_POST['playerId']));
     }
 ?>

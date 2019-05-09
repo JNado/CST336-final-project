@@ -83,6 +83,7 @@
                     <th>Last Name</th>
                     <th>ERA</th>
                     <th>Win/Loss</th>
+                    <th></th>
                 </tr>
             </table>
         </div>
@@ -95,6 +96,7 @@
                     <th>Batting Average</th>
                     <th>On Base Percentage</th>
                     <th>Slugging Percentage</th>
+                    <th></th>
                 </tr>
             </table>
         </div>
@@ -107,6 +109,7 @@
                     <th>Batting Average</th>
                     <th>On Base Percentage</th>
                     <th>Slugging Percentage</th>
+                    <th></th>
                 </tr>
             </table>
         </div>
@@ -119,6 +122,7 @@
                     <th>Batting Average</th>
                     <th>On Base Percentage</th>
                     <th>Slugging Percentage</th>
+                    <th></th>
                 </tr>
             </table>
         </div>
@@ -131,6 +135,7 @@
                     <th>Batting Average</th>
                     <th>On Base Percentage</th>
                     <th>Slugging Percentage</th>
+                    <th></th>
                 </tr>
             </table>
         </div>
@@ -143,6 +148,7 @@
                     <th>Batting Average</th>
                     <th>On Base Percentage</th>
                     <th>Slugging Percentage</th>
+                    <th></th>
                 </tr>
             </table>
         </div>
@@ -155,6 +161,7 @@
                     <th>Batting Average</th>
                     <th>On Base Percentage</th>
                     <th>Slugging Percentage</th>
+                    <th></th>
                 </tr>
             </table>
         </div>
@@ -167,6 +174,7 @@
                     <th>Batting Average</th>
                     <th>On Base Percentage</th>
                     <th>Slugging Percentage</th>
+                    <th></th>
                 </tr>
             </table>
         </div>
@@ -179,6 +187,7 @@
                     <th>Batting Average</th>
                     <th>On Base Percentage</th>
                     <th>Slugging Percentage</th>
+                    <th></th>
                 </tr>
             </table>
         </div>
@@ -340,51 +349,112 @@
                         //Depending on players position, put players in list
                         if(p == "1B"){
                             if($('#first_base').text().indexOf(f) < 1 & $('#first_base').text().indexOf(l) < 1){
-                                $("#firstList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#firstList").append("<tr id='" + id + "table'>" + 
+                                                       "<th>" + f +"</th>" + 
+                                                       "<th>" + l +"</th>" +
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
+                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
+                                                       "</tr>");
                             }
                         }
                         
                         if(p == "2B"){
                             if($('#second_base').text().indexOf(f) < 1 & $('#second_base').text().indexOf(l) < 1){
-                                $("#secondList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#secondList").append("<tr id='" + id + "table'>" + 
+                                                       "<th>" + f +"</th>" + 
+                                                       "<th>" + l +"</th>" +
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
+                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
+                                                       "</tr>");
                             }
                         }
                         
                         if(p == "3B"){
                             if($('#third_base').text().indexOf(f) < 1 & $('#third_base').text().indexOf(l) < 1){
-                                $("#thirdList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#thirdList").append("<tr id='" + id + "table'>" + 
+                                                       "<th>" + f +"</th>" + 
+                                                       "<th>" + l +"</th>" +
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
+                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
+                                                       "</tr>");
                             }
                         }
                         
                         if(p == "C"){
                             if($('#catcher').text().indexOf(f) < 1 & $('#catcher').text().indexOf(l) < 1){
-                                $("#catcherList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#catcherList").append("<tr id='" + id + "table'>" + 
+                                                       "<th>" + f +"</th>" + 
+                                                       "<th>" + l +"</th>" +
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
+                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
+                                                       "</tr>");
                             }
                         }
                         
                         if(p == "SS"){
                             if($('#short_stop').text().indexOf(f) < 1 & $('#short_stop').text().indexOf(l) < 1){
-                                $("#shortList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#shortList").append("<tr id='" + id + "table'>" + 
+                                                       "<th>" + f +"</th>" + 
+                                                       "<th>" + l +"</th>" +
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
+                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
+                                                       "</tr>");
                             }    
                         }
                         
                         if(p == "LF"){
                             if($('#left_field').text().indexOf(f) < 1 & $('#left_field').text().indexOf(l) < 1){
-                                $("#leftList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#leftList").append("<tr id='" + id + "table'>" + 
+                                                       "<th>" + f +"</th>" + 
+                                                       "<th>" + l +"</th>" +
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
+                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
+                                                       "</tr>");
                             }            
                         }
                         
                         if(p == "RF"){
                             if($('#right_field').text().indexOf(f) < 1 & $('#right_field').text().indexOf(l) < 1){
-                                $("#rightList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#rightList").append("<tr id='" + id + "table'>" + 
+                                                       "<th>" + f +"</th>" + 
+                                                       "<th>" + l +"</th>" +
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
+                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
+                                                       "</tr>");
                             }
                         }
                         
                         if(p == "CF"){
                             if($('#center_field').text().indexOf(f) < 1 & $('#center_field').text().indexOf(l) < 1){
-                                $("#centerList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_hitting_tm.queryResults.row["avg"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["ops"] +"</th><th>"+ data.sport_hitting_tm.queryResults.row["slg"] +"</th></tr>");
+                                $("#centerList").append("<tr id='" + id + "table'>" + 
+                                                       "<th>" + f +"</th>" + 
+                                                       "<th>" + l +"</th>" +
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
+                                                       "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
+                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
+                                                       "</tr>");
                             }                 
                         }
+                        
+                        $("input[name='deleteButtonT']").click(function() {
+                            $("#" + id + "table").remove();
+                            removePlayerDB(id);
+                        });
                         
                         if (piv == 1) {
                             //add player to database
@@ -438,8 +508,19 @@
                         
                         //This checks to see if a player was already added. if player is already in list, dont add again.
                         if($('#pitcher').text().indexOf(f) < 1 & $('#pitcher').text().indexOf(l) < 1){
-                            $("#pitcherList").append("<tr><th>"+ f +"</th><th>"+ l +"</th><th>"+ data.sport_pitching_tm.queryResults.row['era'] +"</th><th>"+ data.sport_pitching_tm.queryResults.row['w'] + " / " + data.sport_pitching_tm.queryResults.row['l'] + "</th></tr>");
+                            $("#pitcherList").append("<tr id='" + id + "table'>" + 
+                                                     "<th>" + f +"</th>" + 
+                                                     "<th>" + l +"</th>" +
+                                                     "<th>" + data.sport_pitching_tm.queryResults.row['era'] +"</th>" + 
+                                                     "<th>" + data.sport_pitching_tm.queryResults.row['w'] + " / " + data.sport_pitching_tm.queryResults.row['l'] + "</th>" + 
+                                                     "<th><input type='button' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>" +
+                                                     "</tr>");
                         }
+                        
+                        $("input[name='deleteButtonP']").click(function() {
+                            $("#" + id + "table").remove();
+                            removePlayerDB(id);
+                        });
                         
                         if (piv == 1) {
                             $.ajax({
@@ -465,6 +546,24 @@
                                 }
                             });
                         }
+                    },
+                    complete: function(data, status) {
+                        // console.log(status);
+                    }
+                });
+            }
+            
+            function removePlayerDB(id) {
+                $.ajax({
+                    type: "POST",
+                    url: "api.php",
+                    dataType: "json",
+                    data: {
+                        'playerId' : id,
+                        'op' : '9'
+                    },
+                    success: function(data, status) {
+                        // console.log(data);
                     },
                     complete: function(data, status) {
                         // console.log(status);
