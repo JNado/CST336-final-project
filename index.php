@@ -660,7 +660,7 @@
                     url: "api.php",
                     dataType: "json",
                     data: {
-                        'teamName' : x,
+                        'teamName' : currTeamID,
                         'op' : '11'
                     },
                     success: function(data, status) {
@@ -668,7 +668,44 @@
                         console.log(data);
                         
                         $("#omD").append("<br>Number of players on team : "+ data[0][0]);
-                        
+                        $.ajax({
+                        type: "POST",
+                        url: "api.php",
+                        dataType: "json",
+                        data: {
+                            'teamName' : currTeamID,
+                            'op' : '12'
+                        },
+                        success: function(data, status) {
+                            console.log(status);
+                            console.log(data);
+                            
+                            $("#omD").append("<br>Average ERA : "+ data[0][0]);
+                            $.ajax({
+                                type: "POST",
+                                url: "api.php",
+                                dataType: "json",
+                                data: {
+                                    'teamName' : currTeamID,
+                                    'op' : '13'
+                                },
+                                success: function(data, status) {
+                                    console.log(status);
+                                    console.log(data);
+                                    
+                                    $("#omD").append("<br>Average Batting Average : "+ data[0][0]);
+                                    
+                                },
+                                complete: function(data, status) {
+                                    console.log(status);
+                                }
+                            });
+                            
+                        },
+                        complete: function(data, status) {
+                            console.log(status);
+                        }
+                         });
                     },
                     complete: function(data, status) {
                         console.log(status);

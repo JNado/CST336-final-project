@@ -274,7 +274,60 @@
         $sql = "Select count(id) FROM players WHERE team_id =:id";
         $stmt = $dbConn->prepare($sql);
         
-        $stmt->execute(array(":id" => $_SESSION['id']));
+        $stmt->execute(array(":id" => $_POST['teamName']));
+        $records = $stmt->fetchAll();
+        echo json_encode($records);
+    }
+    else if ($_POST['op'] == 12) {
+        session_start();
+        $host = "127.0.0.1";
+        $dbname = "final_project";
+        $username = "root";
+        $password = "";
+        
+        if  (strpos($_SERVER['HTTP_HOST'], 'herokuapp') !== false) {
+            $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+            $host = $url["host"];
+            $dbname = substr($url["path"], 1);
+            $username = $url["user"];
+            $password = $url["pass"];
+        } 
+        
+        $dbConn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+    //SELECT count(*) FROM players JOIN teams WHERE players.team_id = teams.id & teams.user_id = 0
+    //SELECT * FROM players JOIN teams WHERE players.team_id = teams.id & teams.user_id = 4
+        $sql = "select avg(era) from players WHERE team_id=:id and type = 'P'";
+        $stmt = $dbConn->prepare($sql);
+        
+        $stmt->execute(array(":id" => $_POST['teamName']));
+        $records = $stmt->fetchAll();
+        echo json_encode($records);
+    }
+    
+        else if ($_POST['op'] == 13) {
+        session_start();
+        $host = "127.0.0.1";
+        $dbname = "final_project";
+        $username = "root";
+        $password = "";
+        
+        if  (strpos($_SERVER['HTTP_HOST'], 'herokuapp') !== false) {
+            $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+            $host = $url["host"];
+            $dbname = substr($url["path"], 1);
+            $username = $url["user"];
+            $password = $url["pass"];
+        } 
+        
+        $dbConn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+    //SELECT count(*) FROM players JOIN teams WHERE players.team_id = teams.id & teams.user_id = 0
+    //SELECT * FROM players JOIN teams WHERE players.team_id = teams.id & teams.user_id = 4
+        $sql = $sql = "Select avg(b_avg) from players WHERE team_id=:id and type != 'P'";
+        $stmt = $dbConn->prepare($sql);
+        
+        $stmt->execute(array(":id" => $_POST['teamName']));
         $records = $stmt->fetchAll();
         echo json_encode($records);
     }
