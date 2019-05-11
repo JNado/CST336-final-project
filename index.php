@@ -360,7 +360,7 @@
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
-                                                       "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>"  + 
+                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>"  + 
                                                        "</tr>");
                             }
                         }
@@ -373,7 +373,7 @@
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
-                                                       "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>"  + 
+                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>"  + 
                                                        "</tr>");
                             }
                         }
@@ -386,7 +386,7 @@
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
-                                                       "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>"  + 
+                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>"  + 
                                                        "</tr>");
                             }
                         }
@@ -399,7 +399,7 @@
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
-                                                       "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>" + 
+                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>" + 
                                                        "</tr>");
                             }
                         }
@@ -412,7 +412,7 @@
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
-                                                       "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>"  + 
+                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>"  + 
                                                        "</tr>");
                             }    
                         }
@@ -425,7 +425,7 @@
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
-                                                       "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>"  + 
+                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>"  + 
                                                        "</tr>");
                             }            
                         }
@@ -438,7 +438,7 @@
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
-                                                       "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>"  + 
+                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>"  + 
                                                        "</tr>");
                             }
                         }
@@ -451,7 +451,7 @@
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["avg"] + "</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["ops"] +"</th>" + 
                                                        "<th>" + data.sport_hitting_tm.queryResults.row["slg"] +"</th>" + 
-                                                       "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>"  + 
+                                                       "<th><input type='button' data-id='" + id + "' name='deleteButtonT' value='Delete'/></th>"  + 
                                                        "</tr>");
                             }                 
                         }
@@ -518,7 +518,7 @@
                                                      "<th>" + l +"</th>" +
                                                      "<th>" + data.sport_pitching_tm.queryResults.row['era'] +"</th>" + 
                                                      "<th>" + data.sport_pitching_tm.queryResults.row['w'] + " / " + data.sport_pitching_tm.queryResults.row['l'] + "</th>" + 
-                                                     "<th><input type='button' href='#myModal' data-toggle='modal' onclick='modal(0)' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>" +
+                                                     "<th><input type='button' data-id='" + id + "' name='deleteButtonP' value='Delete'/></th>" +
                                                      "</tr>");
                         }
                         
